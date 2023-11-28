@@ -31,7 +31,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/Jams1223/FoodSwap">
-    <img src="images/FoodSwap\logo.png" alt="Logo" width="80" height="80">
+    <img src="images/FoodSwap logo.png" alt="Logo" width="80" height="80">
   </a>
 
 <h3 align="center">project_title</h3>
