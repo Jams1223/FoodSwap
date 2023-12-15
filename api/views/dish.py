@@ -9,7 +9,7 @@ from models.dish import Dish
 
 blueprint = flask.Blueprint("dishes",__name__)
 
-# $ curl --location --request GET 'http://127.0.0.1:8080/movies'
+# $ curl --location --request GET "http://127.0.0.1:8080/dish"
 @blueprint.route("/", methods=["GET"])
 def get_dishes():
     # Initialize a default limit value. The limit value defines the quantity of
@@ -26,6 +26,13 @@ def get_dishes():
     # object response.
     return flask.jsonify(utils.serialize_sqlalchemy_objects_to_dictionary(dishes))
 
+# curl --location --request POST "http://127.0.0.1:8080/dish" \
+# --header "Content-Type: application/json" \
+# --data-raw '{
+#     "name": "Dish Name",
+#     "cuisine": "Cuisine Type",
+#     "date_made": "12/01/2023"
+# }'
 
 @blueprint.route("/", methods=["POST"])
 def create_dish():
@@ -57,7 +64,7 @@ def create_dish():
     return flask.jsonify(utils.serialize_sqlalchemy_object_to_dictionary(dish))
 
 
-    # $ curl --location --request GET 'http://127.0.0.1:5000/movies/1'
+    # curl --location --request GET "http://127.0.0.1:8080/dish/1"
 @blueprint.route("/<int:dish_id>", methods=["GET"])
 def get_dish(dish_id):
     # Attempt to retrieve a Movie record with the client-provided Movie ID.
@@ -71,7 +78,7 @@ def get_dish(dish_id):
     # Convert the Movie database record (SQLAlchemy Object) into a JSON object response.
     return flask.jsonify(utils.serialize_sqlalchemy_object_to_dictionary(dish))
 
-# $ curl --location --request DELETE 'http://127.0.0.1:5000/movies/1'
+# $ curl --location --request DELETE "http://127.0.0.1:8080/dish/1"
 @blueprint.route("/<int:dish_id>", methods=["DELETE"])
 def delete_dish(dish_id):
     # Attempt to retrieve a Movie record with the client-provided Movie ID.

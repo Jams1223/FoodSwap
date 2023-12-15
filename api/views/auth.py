@@ -9,29 +9,42 @@ from models.user import User
 # Initialize the authentication blueprint.
 blueprint = flask.Blueprint("auth", __name__)
 
+# curl --location --request POST "http://127.0.0.1:8080/auth/signup" \
+# --header "Content-Type: application/json" \
+# --data-raw '{
+#     "first_name": "John",
+#     "last_name": "Doe",
+#     "email": "johndoe@gmail.com",
+#         "_password":"123password",
+#         "seller":true
+# }'
+
+
 @blueprint.route("/signup", methods=["POST"])
 def signup():
     # Parse the JSON data in the request's body.
     user_data = flask.request.get_json()
 
     # Validate that the client provided all required fields.
-    required_fields = ["first_name", "last_name", "email", "password"]
+    required_fields = ["first_name", "last_name", "email", "_password","seller"]
     for field in required_fields:
         # If a required field is missing, return a 400 (Bad Request) HTTP
         # Status Code to clients, signifying that we received a bad request.
         if field not in user_data:
             flask.abort(400, description=f"{field} cannot be blank.")
 
-    user = database.db.session.query(User).filter_by(email=user_data["email"]).one()
-    if user:
-        flask.abort(400, description=f"User already exists.")
+    # user = database.db.session.query(User).filter_by(email=user_data["email"]).one()
+    # if user:
+    #     flask.abort(400, description=f"User already exists.")
 
     # Initialize and populate a User object with the data submitted by the client.
     user = User()
     user.first_name = user_data["first_name"]
     user.last_name = user_data["last_name"]
     user.email = user_data["email"]
-    user.password = user_data["password"]
+    user._password = user_data["_password"]
+    user.seller = user_data["seller"]
+
 
     # Add the User to the database and commit the transaction.
     database.db.session.add(user)
@@ -44,9 +57,10 @@ def signup():
         {
             "id": user.id,
             "first_name": user.first_name,
-            "middle_name": user.middle_name,
             "last_name": user.last_name,
             "email": user.email,
+            "password":user._password,
+            "seller":user.seller,
         }
     )
 
@@ -63,6 +77,7 @@ def confirm_login():
             "middle_name": user.middle_name,
             "last_name": user.last_name,
             "email": user.email,
+            "seller":user.seller,
         }
     )
 
@@ -73,7 +88,7 @@ def login():
     login_data = flask.request.get_json()
 
     # Validate that the client provided all required fields.
-    required_fields = ["email", "password"]
+    required_fields = ["email", "_password"]
     for field in required_fields:
         # If a required field is missing, return a 400 (Bad Request) HTTP
         # Status Code to clients, signifying that we received a bad request.
@@ -92,9 +107,9 @@ def login():
     return flask.jsonify(
         {
             "first_name": user.first_name,
-            "middle_name": user.middle_name,
             "last_name": user.last_name,
             "email": user.email,
+            "seller":user.seller,
         }
     )
 

@@ -7,6 +7,7 @@ import login_manager
 
 from views.auth import blueprint as auth_blueprint
 from views.dish import blueprint as dish_blueprint
+from views.order import blueprint as order_blueprint
 
 
 def bad_request(error: typing.Any) -> flask.Response:
@@ -71,16 +72,6 @@ def unauthorized(error: typing.Any) -> flask.Response:
         401,
     )
 
-# app = Flask(__name__)
-
-# # Members API Route
-
-# @app.route("/members")
-# def members():
-#         return {"members": ["Member1","Member2","Member3"]}
-
-# if __name__ == "__main__":
-#     app.run(debug=True,port = 5001)
 
 def create_app(configuration_name: configuration.ConfigurationName) -> flask.app.Flask:
     """
@@ -100,7 +91,7 @@ def create_app(configuration_name: configuration.ConfigurationName) -> flask.app
 
     database.db.init_app(app)
     with app.app_context():
-        database.db.drop_all()
+        # database.db.drop_all()
         database.db.create_all()
 
     # Initialize the session manager within the instance of the application.
@@ -123,6 +114,11 @@ def create_app(configuration_name: configuration.ConfigurationName) -> flask.app
 #     app.register_blueprint(actor_blueprint, url_prefix="/actors")
 
     app.register_blueprint(dish_blueprint,url_prefix="/dish")
+
+    app.register_blueprint(order_blueprint,url_prefix="/order")
+
+    print(app.url_map)
+
 #     # Load the "movie" routes onto the Flask Application. In loading the
 #     # routes, requests starting with "/movies" will be forwarded to the
 #     # "movie_blueprint."
