@@ -96,6 +96,7 @@ def create_order():
         order_data["order_date"], "%m/%d/%Y"
     ).date()
 
+
     #add the Order to the database and commit 
 
     database.db.session.add(order)
