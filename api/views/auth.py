@@ -33,9 +33,9 @@ def signup():
         if field not in user_data:
             flask.abort(400, description=f"{field} cannot be blank.")
 
-    # user = database.db.session.query(User).filter_by(email=user_data["email"]).one()
-    # if user:
-    #     flask.abort(400, description=f"User already exists.")
+    user = database.db.session.query(User).filter_by(email=user_data["email"]).one()
+    if user:
+        flask.abort(400, description=f"User already exists.")
 
     # Initialize and populate a User object with the data submitted by the client.
     user = User()
@@ -51,7 +51,6 @@ def signup():
     database.db.session.commit()
 
     flask_login.login_user(user)
-
     # Convert the User database record (SQLAlchemy Object) into a JSON object response.
     return flask.jsonify(
         {

@@ -8,7 +8,7 @@ import login_manager
 from views.auth import blueprint as auth_blueprint
 from views.dish import blueprint as dish_blueprint
 from views.order import blueprint as order_blueprint
-
+from views.testing import blueprint as testing_blueprint
 
 def bad_request(error: typing.Any) -> flask.Response:
     """
@@ -116,6 +116,8 @@ def create_app(configuration_name: configuration.ConfigurationName) -> flask.app
     app.register_blueprint(dish_blueprint,url_prefix="/dish")
 
     app.register_blueprint(order_blueprint,url_prefix="/order")
+
+    app.register_blueprint(testing_blueprint,url_prefix="/test")
 
     print(app.url_map)
 

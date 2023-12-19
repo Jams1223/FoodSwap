@@ -1,0 +1,145 @@
+{% if current_user.is_authenticated %}
+  Hi {{ current_user.name }}!
+{% endif %}
+
+<strong>List of all Dishes</strong>
+<br>
+{% for dish in dishes%}
+<li>{{dish.id, dish.name}}</li>
+{%endfor%}
+
+
+<strong>CREATE DISH</strong>
+<div class = "container">
+    <form method="POST" class = "form-register">
+        {{add_Dish_form.hidden_tag()}}
+        {{add_Dish_form.dish_name.label()}}
+        <br>
+        {{add_Dish_form.dish_name(class="form-control", placeholder = "Dish Name" )}}
+
+        <br>
+        {{add_Dish_form.dish_cuisine.label()}}
+        <br>
+        {{add_Dish_form.dish_cuisine(class="form-control", placeholder = "Dish Cuisine" )}}
+
+        <br>
+        {{add_Dish_form.dish_date.label()}}
+        <br>
+        {{add_Dish_form.dish_date(class="form-control", placeholder = "Dish date" )}}
+        
+        <br>
+        {{add_Dish_form.submit (class="btn btn-lg btn-block btn-primary mt-2")}}
+    </form>
+</div>
+
+<strong>DELETE DISH</strong>
+<div class = "container">
+    <form method="POST" class = "form-register">
+        {{deleteDish_form.hidden_tag()}}
+        {{deleteDish_form.id.label()}}
+        <br>
+        {{deleteDish_form.id(class="form-control", placeholder = "Dish id" )}}
+        
+        <br>
+        {{deleteDish_form.submit (class="btn btn-lg btn-block btn-primary mt-2")}}
+    </form>
+</div>
+
+<br>
+<strong>List of all Orders</strong>
+<br>
+{% for order in orders%}
+<li>{{ order.id, order.buyer_id,order.seller_id,order.total_price}}</li>
+{%endfor%}
+<br>
+
+<strong>CREATE ORDER</strong>
+<br>
+<div class = "container">
+    <form method="POST" class = "form-register">
+        {{addOrder_Form.hidden_tag()}}
+
+        {{addOrder_Form.buyer_id.label()}}
+        {{addOrder_Form.buyer_id(class="form-control", placeholder = "Buyer ID" )}}
+        <br>
+
+        {{addOrder_Form.seller_id.label()}}
+        {{addOrder_Form.seller_id(class="form-control", placeholder = "Seller ID" )}}
+        <br>
+
+        {{addOrder_Form.total_price.label()}}
+        {{addOrder_Form.total_price(class="form-control", placeholder = "Total Price" )}}
+        <br>
+
+        {{addOrder_Form.status.label()}}
+        {{addOrder_Form.status(class="form-control", placeholder = "status" )}}
+        <br>
+
+        {{addOrder_Form.order_date.label()}}
+        {{addOrder_Form.order_date(class="form-control", placeholder = "Order Date" )}}
+        <br>
+
+        <br>
+        {{addOrder_Form.submit (class="btn btn-lg btn-block btn-primary mt-2")}}
+    </form>
+</div>
+
+
+
+<strong>List of all Users</strong>
+<br>
+{% for user in users%}
+<li>{{user.id, user.first_name, user.last_name}}</li>
+{%endfor%}
+
+
+<strong>CREATE USER</strong>
+<br>
+<div class = "container">
+    <form method="POST" class = "form-register">
+        {{add_user_form.hidden_tag()}}
+
+        {{add_user_form.f_name.label()}}
+        {{add_user_form.f_name(class="form-control", placeholder = "First Name" )}}
+        <br>
+
+        {{add_user_form.l_name.label()}}
+        {{add_user_form.l_name(class="form-control", placeholder = "Last Name" )}}
+        <br>
+
+        {{add_user_form.email.label()}}
+        {{add_user_form.email(class="form-control", placeholder = "Email" )}}
+        <br>
+
+        {{add_user_form.password.label()}}
+        {{add_user_form.password(class="form-control", placeholder = "password" )}}
+        <br>
+
+        <!-- Boolean -->
+        {{add_user_form.seller.label()}}
+        {{add_user_form.seller(class="form-control", placeholder = "Dish id" )}}
+        
+        <br>
+        {{add_user_form.submit (class="btn btn-lg btn-block btn-primary mt-2")}}
+    </form>
+</div>
+
+
+<!-- <strong>Login</strong>
+<br>
+<div class = "container">
+    <form method="POST" class = "form-register">
+        {{login_form.hidden_tag()}}
+
+        {{login_form.email.label()}}
+        {{login_form.email(class="form-control", placeholder = "Email" )}}
+        <br>
+
+        {{login_form.password.label()}}
+        {{login_form.password(class="form-control", placeholder = "password" )}}
+        <br>
+
+        <br>
+        {{login_form.submit (class="btn btn-lg btn-block btn-primary mt-2")}}
+    </form>
+</div> -->
